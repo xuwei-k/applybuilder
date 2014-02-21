@@ -8,84 +8,189 @@ object ApplyBuilder {
     new Apply2[F1.M, F2.M, F1.A, F2.A](F1(f1), F2(f2), F1.TC)
 
 
+  def apply2[F1, F2](f1: => F1, f2: => F2)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2]) =
+    new Apply2[F1.M, F2.M, F1.A, F2.A](F1(f1), F2(f2), F1.TC)
+
+
+
   def %%[F1, F2, F3](f1: => F1, f2: => F2, f3: => F3)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3]) =
     new Apply3[F1.M, F2.M, F3.M, F1.A, F2.A, F3.A](F1(f1), F2(f2), F3(f3), F1.TC)
+
+
+  def apply3[F1, F2, F3](f1: => F1, f2: => F2, f3: => F3)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3]) =
+    new Apply3[F1.M, F2.M, F3.M, F1.A, F2.A, F3.A](F1(f1), F2(f2), F3(f3), F1.TC)
+
 
 
   def %%%[F1, F2, F3, F4](f1: => F1, f2: => F2, f3: => F3, f4: => F4)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4]) =
     new Apply4[F1.M, F2.M, F3.M, F4.M, F1.A, F2.A, F3.A, F4.A](F1(f1), F2(f2), F3(f3), F4(f4), F1.TC)
 
 
+  def apply4[F1, F2, F3, F4](f1: => F1, f2: => F2, f3: => F3, f4: => F4)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4]) =
+    new Apply4[F1.M, F2.M, F3.M, F4.M, F1.A, F2.A, F3.A, F4.A](F1(f1), F2(f2), F3(f3), F4(f4), F1.TC)
+
+
+
   def %%%%[F1, F2, F3, F4, F5](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5]) =
     new Apply5[F1.M, F2.M, F3.M, F4.M, F5.M, F1.A, F2.A, F3.A, F4.A, F5.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F1.TC)
+
+
+  def apply5[F1, F2, F3, F4, F5](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5]) =
+    new Apply5[F1.M, F2.M, F3.M, F4.M, F5.M, F1.A, F2.A, F3.A, F4.A, F5.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F1.TC)
+
 
 
   def %%%%%[F1, F2, F3, F4, F5, F6](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6]) =
     new Apply6[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F1.TC)
 
 
+  def apply6[F1, F2, F3, F4, F5, F6](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6]) =
+    new Apply6[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F1.TC)
+
+
+
   def %%%%%%[F1, F2, F3, F4, F5, F6, F7](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7]) =
     new Apply7[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F1.TC)
+
+
+  def apply7[F1, F2, F3, F4, F5, F6, F7](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7]) =
+    new Apply7[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F1.TC)
+
 
 
   def %%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8]) =
     new Apply8[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F1.TC)
 
 
+  def apply8[F1, F2, F3, F4, F5, F6, F7, F8](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8]) =
+    new Apply8[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F1.TC)
+
+
+
   def %%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9]) =
     new Apply9[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F1.TC)
+
+
+  def apply9[F1, F2, F3, F4, F5, F6, F7, F8, F9](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9]) =
+    new Apply9[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F1.TC)
+
 
 
   def %%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10]) =
     new Apply10[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F1.TC)
 
 
+  def apply10[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10]) =
+    new Apply10[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F1.TC)
+
+
+
   def %%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11]) =
     new Apply11[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F1.TC)
+
+
+  def apply11[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11]) =
+    new Apply11[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F1.TC)
+
 
 
   def %%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12]) =
     new Apply12[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F1.TC)
 
 
+  def apply12[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12]) =
+    new Apply12[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F1.TC)
+
+
+
   def %%%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13]) =
     new Apply13[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F1.TC)
+
+
+  def apply13[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13]) =
+    new Apply13[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F1.TC)
+
 
 
   def %%%%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14]) =
     new Apply14[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F1.TC)
 
 
+  def apply14[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14]) =
+    new Apply14[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F1.TC)
+
+
+
   def %%%%%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15]) =
     new Apply15[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F1.TC)
+
+
+  def apply15[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15]) =
+    new Apply15[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F1.TC)
+
 
 
   def %%%%%%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16]) =
     new Apply16[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F1.TC)
 
 
+  def apply16[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16]) =
+    new Apply16[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F1.TC)
+
+
+
   def %%%%%%%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17]) =
     new Apply17[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F1.TC)
+
+
+  def apply17[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17]) =
+    new Apply17[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F1.TC)
+
 
 
   def %%%%%%%%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17, f18: => F18)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17], F18: Unapply[Apply, F18]) =
     new Apply18[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F18.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A, F18.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F18(f18), F1.TC)
 
 
+  def apply18[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17, f18: => F18)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17], F18: Unapply[Apply, F18]) =
+    new Apply18[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F18.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A, F18.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F18(f18), F1.TC)
+
+
+
   def %%%%%%%%%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17, f18: => F18, f19: => F19)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17], F18: Unapply[Apply, F18], F19: Unapply[Apply, F19]) =
     new Apply19[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F18.M, F19.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A, F18.A, F19.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F18(f18), F19(f19), F1.TC)
+
+
+  def apply19[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17, f18: => F18, f19: => F19)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17], F18: Unapply[Apply, F18], F19: Unapply[Apply, F19]) =
+    new Apply19[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F18.M, F19.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A, F18.A, F19.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F18(f18), F19(f19), F1.TC)
+
 
 
   def %%%%%%%%%%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17, f18: => F18, f19: => F19, f20: => F20)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17], F18: Unapply[Apply, F18], F19: Unapply[Apply, F19], F20: Unapply[Apply, F20]) =
     new Apply20[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F18.M, F19.M, F20.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A, F18.A, F19.A, F20.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F18(f18), F19(f19), F20(f20), F1.TC)
 
 
+  def apply20[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17, f18: => F18, f19: => F19, f20: => F20)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17], F18: Unapply[Apply, F18], F19: Unapply[Apply, F19], F20: Unapply[Apply, F20]) =
+    new Apply20[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F18.M, F19.M, F20.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A, F18.A, F19.A, F20.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F18(f18), F19(f19), F20(f20), F1.TC)
+
+
+
   def %%%%%%%%%%%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17, f18: => F18, f19: => F19, f20: => F20, f21: => F21)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17], F18: Unapply[Apply, F18], F19: Unapply[Apply, F19], F20: Unapply[Apply, F20], F21: Unapply[Apply, F21]) =
     new Apply21[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F18.M, F19.M, F20.M, F21.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A, F18.A, F19.A, F20.A, F21.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F18(f18), F19(f19), F20(f20), F21(f21), F1.TC)
 
 
+  def apply21[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17, f18: => F18, f19: => F19, f20: => F20, f21: => F21)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17], F18: Unapply[Apply, F18], F19: Unapply[Apply, F19], F20: Unapply[Apply, F20], F21: Unapply[Apply, F21]) =
+    new Apply21[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F18.M, F19.M, F20.M, F21.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A, F18.A, F19.A, F20.A, F21.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F18(f18), F19(f19), F20(f20), F21(f21), F1.TC)
+
+
+
   def %%%%%%%%%%%%%%%%%%%%%[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17, f18: => F18, f19: => F19, f20: => F20, f21: => F21, f22: => F22)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17], F18: Unapply[Apply, F18], F19: Unapply[Apply, F19], F20: Unapply[Apply, F20], F21: Unapply[Apply, F21], F22: Unapply[Apply, F22]) =
     new Apply22[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F18.M, F19.M, F20.M, F21.M, F22.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A, F18.A, F19.A, F20.A, F21.A, F22.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F18(f18), F19(f19), F20(f20), F21(f21), F22(f22), F1.TC)
+
+
+  def apply22[F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22](f1: => F1, f2: => F2, f3: => F3, f4: => F4, f5: => F5, f6: => F6, f7: => F7, f8: => F8, f9: => F9, f10: => F10, f11: => F11, f12: => F12, f13: => F13, f14: => F14, f15: => F15, f16: => F16, f17: => F17, f18: => F18, f19: => F19, f20: => F20, f21: => F21, f22: => F22)(implicit F1: Unapply[Apply, F1], F2: Unapply[Apply, F2], F3: Unapply[Apply, F3], F4: Unapply[Apply, F4], F5: Unapply[Apply, F5], F6: Unapply[Apply, F6], F7: Unapply[Apply, F7], F8: Unapply[Apply, F8], F9: Unapply[Apply, F9], F10: Unapply[Apply, F10], F11: Unapply[Apply, F11], F12: Unapply[Apply, F12], F13: Unapply[Apply, F13], F14: Unapply[Apply, F14], F15: Unapply[Apply, F15], F16: Unapply[Apply, F16], F17: Unapply[Apply, F17], F18: Unapply[Apply, F18], F19: Unapply[Apply, F19], F20: Unapply[Apply, F20], F21: Unapply[Apply, F21], F22: Unapply[Apply, F22]) =
+    new Apply22[F1.M, F2.M, F3.M, F4.M, F5.M, F6.M, F7.M, F8.M, F9.M, F10.M, F11.M, F12.M, F13.M, F14.M, F15.M, F16.M, F17.M, F18.M, F19.M, F20.M, F21.M, F22.M, F1.A, F2.A, F3.A, F4.A, F5.A, F6.A, F7.A, F8.A, F9.A, F10.A, F11.A, F12.A, F13.A, F14.A, F15.A, F16.A, F17.A, F18.A, F19.A, F20.A, F21.A, F22.A](F1(f1), F2(f2), F3(f3), F4(f4), F5(f5), F6(f6), F7(f7), F8(f8), F9(f9), F10(f10), F11(f11), F12(f12), F13(f13), F14(f14), F15(f15), F16(f16), F17(f17), F18(f18), F19(f19), F20(f20), F21(f21), F22(f22), F1.TC)
+
 
 
 }
