@@ -34,7 +34,7 @@ object build extends Build {
       case _ =>
         Nil
     }),
-    sonatypeReleaseAllTask := Sonatype.SonatypeKeys.sonatypeReleaseAll.toTask(""),
+    sonatypeReleaseAllTask := Sonatype.SonatypeKeys.sonatypeReleaseAll.toTask("").value,
     ReleasePlugin.ReleaseKeys.releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       inquireVersions,
