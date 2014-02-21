@@ -9,7 +9,7 @@
 libraryDependencies += "com.github.xuwei-k" %% "applybuilder70" % "0.1.0"
 ```
 
-- [API Documentation](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/applybuilder70_2.10/0.1.0/applybuilder70_2.10-0.1.0-javadoc.jar/!/index.html#scalaz.ApplyBuilder)
+- [API Documentation](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/applybuilder70_2.10/0.1.0/applybuilder70_2.10-0.1.0-javadoc.jar/!/index.html#scalaz.ApplyBuilder$)
 
 ### for scalaz 7.1.0-M5
 
@@ -17,5 +17,5 @@ libraryDependencies += "com.github.xuwei-k" %% "applybuilder70" % "0.1.0"
 libraryDependencies += "com.github.xuwei-k" %% "applybuilder71" % "0.1.0"
 ```
 
-- [API Documentation](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/applybuilder71_2.10/0.1.0/applybuilder71_2.10-0.1.0-javadoc.jar/!/index.html#scalaz.ApplyBuilder)
+- [API Documentation](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/applybuilder71_2.10/0.1.0/applybuilder71_2.10-0.1.0-javadoc.jar/!/index.html#scalaz.ApplyBuilder$)
 
