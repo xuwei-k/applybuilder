@@ -1,0 +1,7 @@
+target
+*.class
+.DS_Store
+*.jar
+*.swp
+scalaz70/src/main/scala/generated/
+scalaz71/src/main/scala/generated/
