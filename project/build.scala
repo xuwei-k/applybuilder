@@ -8,7 +8,7 @@ import xerial.sbt.Sonatype
 object build extends Build {
 
   def gitHash: Option[String] = scala.util.Try(
-    sys.process.Process("git show -s --oneline").lines_!.head.split(" ").head
+    sys.process.Process("git rev-parse HEAD").lines_!.head
   ).toOption
 
   val showDoc = TaskKey[Unit]("showDoc")
@@ -16,7 +16,6 @@ object build extends Build {
   val copySources = taskKey[Unit]("copy source files")
   val generatedSourceDir = "generated"
   val cleanSrc = taskKey[Unit]("clean generated sources")
-  val sonatypeReleaseAllTask = taskKey[Unit]("sonatypeReleaseAllTask")
 
   def releaseStepAggregateCross[A](key: TaskKey[A]): ReleaseStep = ReleaseStep(
     action = { state =>
@@ -34,7 +33,6 @@ object build extends Build {
       case _ =>
         Nil
     }),
-    sonatypeReleaseAllTask := Sonatype.SonatypeKeys.sonatypeReleaseAll.toTask("").value,
     ReleasePlugin.ReleaseKeys.releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       inquireVersions,
@@ -46,15 +44,9 @@ object build extends Build {
       releaseStepAggregateCross(PgpKeys.publishSigned),
       setNextVersion,
       commitNextVersion,
-      releaseStepAggregateCross(sonatypeReleaseAllTask),
+      releaseStepAggregateCross(Sonatype.SonatypeKeys.sonatypeReleaseAll),
       pushChanges
     ),
-    publishTo := {
-      if(isSnapshot.value)
-        Some("snapshots" at "https://oss.sonatype.org/content/repositories/snapshots")
-      else
-        Some("releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2")
-    },
     scalaVersion := "2.10.3",
     crossScalaVersions := List("2.11.0-M8", "2.10.3", "2.9.3"),
     organization := "com.github.xuwei-k",
