@@ -48,7 +48,7 @@ object build extends Build {
       pushChanges
     ),
     scalaVersion := "2.10.3",
-    crossScalaVersions := List("2.11.0-M8", "2.10.3", "2.9.3"),
+    crossScalaVersions := List("2.11.0-RC1", "2.10.3", "2.9.3"),
     organization := "com.github.xuwei-k",
     startYear := Some(2014),
     scmInfo := Some(ScmInfo(
@@ -101,7 +101,7 @@ object build extends Build {
     "applybuilder70", file("scalaz70")
   ).settings(
     baseSettings ++ Seq(
-      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.0.5"
+      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.0.6"
     ) : _*
   )
 
@@ -109,7 +109,7 @@ object build extends Build {
     "applybuilder71", file("scalaz71")
   ).settings(
     baseSettings ++ Seq(
-      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.1.0-M5"
+      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.1.0-M6"
     ) : _*
   )
 
