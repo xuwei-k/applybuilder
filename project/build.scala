@@ -25,6 +25,37 @@ object build extends Build {
     enableCrossBuild = true
   )
 
+  val sonatypeURL = "https://oss.sonatype.org/service/local/repositories/"
+
+  val updateReadme = { state: State =>
+    val extracted = Project.extract(state)
+    val scalaV = extracted get scalaBinaryVersion
+    val v = extracted get version
+    val org =  extracted get organization
+    val modules = ("70" :: "71" :: Nil).map("applybuilder" + _)
+    val snapshotOrRelease = if(extracted get isSnapshot) "snapshots" else "releases"
+    val readme = "README.md"
+    val readmeFile = file(readme)
+    val newReadme = Predef.augmentString(IO.read(readmeFile)).lines.map{ line =>
+      val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
+      val i = modules.indexWhere(line.contains)
+      if(line.startsWith("libraryDependencies") && matchReleaseOrSnapshot){
+        s"""libraryDependencies += "${org}" %% "${modules(i)}" % "$v""""
+      }else if(line.contains(sonatypeURL) && matchReleaseOrSnapshot){
+        val n = modules(i)
+        s"- [API Documentation](${sonatypeURL}${snapshotOrRelease}/archive/${org.replace('.','/')}/${n}_${scalaV}/${v}/${n}_${scalaV}-${v}-javadoc.jar/!/index.html)"
+      }else line
+    }.mkString("", "\n", "\n")
+    IO.write(readmeFile, newReadme)
+    val git = new Git(extracted get baseDirectory)
+    git.add(readme) ! state.log
+    git.commit("update " + readme) ! state.log
+    "git diff HEAD^" ! state.log
+    state
+  }
+
+  val updateReadmeProcess: ReleaseStep = updateReadme
+
   val commonSettings = ReleasePlugin.releaseSettings ++ Sonatype.sonatypeSettings ++ Seq(
     sourcesInBase := false,
     credentials ++= ((sys.env.get("SONATYPE_USER"), sys.env.get("SONATYPE_PASS")) match {
@@ -33,6 +64,7 @@ object build extends Build {
       case _ =>
         Nil
     }),
+    commands += Command.command("updateReadme")(updateReadme),
     ReleasePlugin.ReleaseKeys.releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       inquireVersions,
@@ -40,11 +72,13 @@ object build extends Build {
       runTest,
       setReleaseVersion,
       commitReleaseVersion,
+      updateReadmeProcess,
       tagRelease,
       releaseStepAggregateCross(PgpKeys.publishSigned),
       setNextVersion,
       commitNextVersion,
       releaseStepAggregateCross(Sonatype.SonatypeKeys.sonatypeReleaseAll),
+      updateReadmeProcess,
       pushChanges
     ),
     scalaVersion := "2.10.3",
