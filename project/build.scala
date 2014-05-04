@@ -85,10 +85,6 @@ object build extends Build {
     crossScalaVersions := List("2.11.0-RC1", "2.10.4", "2.9.3"),
     organization := "com.github.xuwei-k",
     startYear := Some(2014),
-    scmInfo := Some(ScmInfo(
-      url("https://github.com/xuwei-k/applybuilder"),
-      "scm:git:git@github.com:xuwei-k/applybuilder.git"
-    )),
     description := "scalaz.Apply builder",
     scalacOptions in (Compile, doc) ++= {
       val tag = if(isSnapshot.value) gitHash.getOrElse("master") else { "v" + version.value }
@@ -107,6 +103,11 @@ object build extends Build {
         <url>https://github.com/xuwei-k</url>
       </developer>
     </developers>
+    <scm>
+      <url>git@github.com:xuwei-k/applybuilder.git</url>
+      <connection>scm:git:git@github.com:xuwei-k/applybuilder.git</connection>
+      <tag>{if(isSnapshot.value) gitHash.getOrElse("master") else { "v" + version.value }}</tag>
+    </scm>
     ),
     licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
     scalacOptions ++= Seq("-deprecation", "-Xlint", "-unchecked") ++ (
