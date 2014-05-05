@@ -113,6 +113,12 @@ object build extends Build {
     scalacOptions ++= Seq("-deprecation", "-Xlint", "-unchecked") ++ (
       if(scalaVersion.value.startsWith("2.9")) Seq("-Ydependent-method-types") else Seq("-language:_")
     ),
+    scalacOptions ++= (
+      if(scalaVersion.value.startsWith("2.11"))
+        Seq("-Ywarn-unused", "-Ywarn-unused-import")
+      else
+        Nil
+    ),
     showDoc in Compile <<= (doc in Compile, target in doc in Compile) map { (_, out) =>
       java.awt.Desktop.getDesktop.open(out / "index.html")
     }
