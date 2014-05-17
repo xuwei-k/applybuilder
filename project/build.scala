@@ -82,7 +82,7 @@ object build extends Build {
       pushChanges
     ),
     scalaVersion := "2.10.4",
-    crossScalaVersions := List("2.11.0-RC1", "2.10.4", "2.9.3"),
+    crossScalaVersions := List("2.11.0", "2.10.4", "2.9.3"),
     organization := "com.github.xuwei-k",
     startYear := Some(2014),
     description := "scalaz.Apply builder",
@@ -150,7 +150,7 @@ object build extends Build {
     "applybuilder71", file("scalaz71")
   ).settings(
     baseSettings ++ Seq(
-      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.1.0-M6"
+      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.1.0-M7"
     ) : _*
   )
 
