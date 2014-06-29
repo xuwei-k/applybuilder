@@ -150,7 +150,7 @@ object build extends Build {
     "applybuilder71", file("scalaz71")
   ).settings(
     baseSettings ++ Seq(
-      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.1.0-M7"
+      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.1.0-RC1"
     ) : _*
   )
 
