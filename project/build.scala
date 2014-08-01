@@ -111,7 +111,13 @@ object build extends Build {
     ),
     licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
     scalacOptions ++= Seq("-deprecation", "-Xlint", "-unchecked") ++ (
-      if(scalaVersion.value.startsWith("2.9")) Seq("-Ydependent-method-types") else Seq("-language:_")
+      if(scalaVersion.value.startsWith("2.9")) Seq("-Ydependent-method-types")
+      else (
+        "-language:existentials" ::
+        "-language:higherKinds" ::
+        "-language:implicitConversions" ::
+        Nil
+      )
     ),
     scalacOptions ++= (
       if(scalaVersion.value.startsWith("2.11"))
