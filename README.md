@@ -5,6 +5,8 @@
 
 ### for scalaz 7.0.x
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder70_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder70_2.11)
+
 ```scala
 libraryDependencies += "com.github.xuwei-k" %% "applybuilder70" % "0.1.3"
 ```
@@ -12,6 +14,8 @@ libraryDependencies += "com.github.xuwei-k" %% "applybuilder70" % "0.1.3"
 - [API Documentation](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/applybuilder70_2.11/0.1.3/applybuilder70_2.11-0.1.3-javadoc.jar/!/index.html)
 
 ### for scalaz 7.1.0
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder71_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder71_2.11)
 
 ```scala
 libraryDependencies += "com.github.xuwei-k" %% "applybuilder71" % "0.1.5"
