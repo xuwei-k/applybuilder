@@ -8,3 +8,10 @@ scala:
 jdk:
   - oraclejdk7
 
+script:
+  - sbt ++${TRAVIS_SCALA_VERSION} test $(if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ${JAVA_HOME} == $(jdk_switcher home oraclejdk7) && "${TRAVIS_BRANCH}" == "master" ]]; then echo "publish"; fi)
+
+env:
+  global:
+    - secure: "FssNdaMR33xLjNUrehlOOo2tf0xMIQa2Kv76ZwCHNLGQfwz9jFbAxG178GODASw6qsLO4qc+hXRJeV9bQsoYf7e83lB3XetVRkCKV72AcWIh60unK0CsDYKQ3Dz4xop+5XnfyYwIHutVx/1ipj4aLhda355yZLOnlBath6+CrQo="
+    - secure: "WVajOVGoXa+VPe1tS9juL4jKLenIitzc0cydfyjrxPjeahtHvdGRslVDdDMVQz8e0Lmt55SlnXGKo3XlY5Y5IHnIzIxEcBqLHvec17xNup4dybxv5XOGjuLTWz9pbX6erV8eQNX5e9x+77hBYInVh0TIHqr6X4imPs+a/DSqQ6o="
