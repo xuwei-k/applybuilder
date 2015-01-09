@@ -82,7 +82,7 @@ object build extends Build {
       pushChanges
     ),
     scalaVersion := "2.10.4",
-    crossScalaVersions := "2.11.4" :: scalaVersion.value :: "2.9.3" :: Nil,
+    crossScalaVersions := "2.11.5" :: scalaVersion.value :: "2.9.3" :: Nil,
     organization := "com.github.xuwei-k",
     startYear := Some(2014),
     description := "scalaz.Apply builder",
