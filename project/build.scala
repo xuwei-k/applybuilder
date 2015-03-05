@@ -81,7 +81,7 @@ object build extends Build {
       updateReadmeProcess,
       pushChanges
     ),
-    scalaVersion := "2.10.4",
+    scalaVersion := "2.10.5",
     crossScalaVersions := "2.11.6" :: scalaVersion.value :: "2.9.3" :: Nil,
     organization := "com.github.xuwei-k",
     startYear := Some(2014),
