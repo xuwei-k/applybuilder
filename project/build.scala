@@ -58,6 +58,12 @@ object build extends Build {
 
   val updateReadmeProcess: ReleaseStep = updateReadme
 
+  private[this] val unusedWarnings = (
+    "-Ywarn-unused" ::
+    "-Ywarn-unused-import" ::
+    Nil
+  )
+
   val commonSettings = ReleasePlugin.releaseSettings ++ Sonatype.sonatypeSettings ++ Seq(
     sourcesInBase := false,
     credentials ++= ((sys.env.get("SONATYPE_USER"), sys.env.get("SONATYPE_PASS")) match {
@@ -120,16 +126,14 @@ object build extends Build {
         "-language:implicitConversions" ::
         Nil
       )
-    ),
-    scalacOptions ++= (
-      if(scalaVersion.value.startsWith("2.11"))
-        Seq("-Ywarn-unused", "-Ywarn-unused-import")
-      else
-        Nil
-    ),
+    ) ++ PartialFunction.condOpt(CrossVersion.partialVersion(scalaVersion.value)){
+      case Some((2, v)) if v >= 11 => unusedWarnings
+    }.toList.flatten,
     showDoc in Compile <<= (doc in Compile, target in doc in Compile) map { (_, out) =>
       java.awt.Desktop.getDesktop.open(out / "index.html")
     }
+  ) ++ Seq(Compile, Test).flatMap(c =>
+    scalacOptions in (c, console) ~= {_.filterNot(unusedWarnings.toSet)}
   )
 
   val baseSettings = commonSettings ++ Seq(
