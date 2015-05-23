@@ -27,6 +27,8 @@ object build extends Build {
 
   val sonatypeURL = "https://oss.sonatype.org/service/local/repositories/"
 
+  private[this] final val Scala210 = "2.10.5"
+
   val updateReadme = { state: State =>
     val extracted = Project.extract(state)
     val scalaV = extracted get scalaBinaryVersion
@@ -81,8 +83,8 @@ object build extends Build {
       updateReadmeProcess,
       pushChanges
     ),
-    scalaVersion := "2.10.5",
-    crossScalaVersions := "2.11.6" :: scalaVersion.value :: "2.9.3" :: Nil,
+    scalaVersion := Scala210,
+    crossScalaVersions := "2.11.6" :: Scala210 :: "2.9.3" :: Nil,
     organization := "com.github.xuwei-k",
     startYear := Some(2014),
     description := "scalaz.Apply builder",
