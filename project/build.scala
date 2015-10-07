@@ -27,7 +27,7 @@ object build extends Build {
 
   val sonatypeURL = "https://oss.sonatype.org/service/local/repositories/"
 
-  private[this] final val Scala210 = "2.10.5"
+  private[this] final val Scala210 = "2.10.6"
 
   val updateReadme = { state: State =>
     val extracted = Project.extract(state)
