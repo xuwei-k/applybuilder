@@ -1,6 +1,7 @@
 import sbt._, Keys._
 
 import sbtrelease._
+import ReleasePlugin.autoImport._
 import ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
 import xerial.sbt.Sonatype
@@ -64,7 +65,7 @@ object build extends Build {
     Nil
   )
 
-  val commonSettings = ReleasePlugin.releaseSettings ++ Sonatype.sonatypeSettings ++ Seq(
+  val commonSettings = Sonatype.sonatypeSettings ++ Seq(
     sourcesInBase := false,
     fullResolvers ~= {_.filterNot(_.name == "jcenter")},
     credentials ++= ((sys.env.get("SONATYPE_USER"), sys.env.get("SONATYPE_PASS")) match {
@@ -74,7 +75,7 @@ object build extends Build {
         Nil
     }),
     commands += Command.command("updateReadme")(updateReadme),
-    ReleasePlugin.ReleaseKeys.releaseProcess := Seq[ReleaseStep](
+    releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       inquireVersions,
       runClean,
