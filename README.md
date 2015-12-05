@@ -15,10 +15,10 @@ libraryDependencies += "com.github.xuwei-k" %% "applybuilder" % "0.2.0"
 ```scala
 resolvers += Opts.resolver.sonatypeSnapshots
 
-libraryDependencies += "com.github.xuwei-k" %% "applybuilder" % "0.2.0-SNAPSHOT"
+libraryDependencies += "com.github.xuwei-k" %% "applybuilder" % "0.2.1-SNAPSHOT"
 ```
 
-- [API Documentation](https://oss.sonatype.org/service/local/repositories/snapshots/archive/com/github/xuwei-k/applybuilder_2.11/0.2.0-SNAPSHOT/applybuilder_2.11-0.2.0-SNAPSHOT-javadoc.jar/!/index.html)
+- [API Documentation](https://oss.sonatype.org/service/local/repositories/snapshots/archive/com/github/xuwei-k/applybuilder_2.10/0.2.1-SNAPSHOT/applybuilder_2.10-0.2.1-SNAPSHOT-javadoc.jar/!/index.html)
 
 ### for scalaz 7.0.x, 7.1.x
 
