@@ -66,6 +66,7 @@ object build extends Build {
 
   val commonSettings = ReleasePlugin.releaseSettings ++ Sonatype.sonatypeSettings ++ Seq(
     sourcesInBase := false,
+    fullResolvers ~= {_.filterNot(_.name == "jcenter")},
     credentials ++= ((sys.env.get("SONATYPE_USER"), sys.env.get("SONATYPE_PASS")) match {
       case (Some(user), Some(pass)) =>
         Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", user, pass) :: Nil
