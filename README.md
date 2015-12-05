@@ -1,25 +1,25 @@
-# ApplyBuilder[![Build Status](https://secure.travis-ci.org/xuwei-k/applybuilder.png?branch=master)](http://travis-ci.org/xuwei-k/applybuilder)
+# ApplyBuilder
 
-- [Maven Central Repository Search](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.xuwei-k%22)
-- [Maven Central](http://repo1.maven.org/maven2/com/github/xuwei-k/)
+[![Build Status](https://secure.travis-ci.org/xuwei-k/applybuilder.png?branch=master)](http://travis-ci.org/xuwei-k/applybuilder)
+[![scaladoc](http://javadoc-badge.appspot.com/com.github.xuwei-k/applybuilder_2.11.svg?label=scaladoc)](http://javadoc-badge.appspot.com/com.github.xuwei-k/applybuilder_2.11)
+[![maven central](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder_2.11)
 
-### for scalaz 7.0.x
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder70_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder70_2.11)
-
-```scala
-libraryDependencies += "com.github.xuwei-k" %% "applybuilder70" % "0.1.3"
-```
-
-- [API Documentation](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/applybuilder70_2.11/0.1.3/applybuilder70_2.11-0.1.3-javadoc.jar/!/index.html)
-
-### for scalaz 7.1.0
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder71_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder71_2.11)
+## release
 
 ```scala
-libraryDependencies += "com.github.xuwei-k" %% "applybuilder71" % "0.1.5"
+libraryDependencies += "com.github.xuwei-k" %% "applybuilder" % "0.2.0"
 ```
 
-- [API Documentation](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/applybuilder71_2.11/0.1.5/applybuilder71_2.11-0.1.5-javadoc.jar/!/index.html)
+## snapshot
 
+```scala
+resolvers += Opts.resolver.sonatypeSnapshots
+
+libraryDependencies += "com.github.xuwei-k" %% "applybuilder" % "0.2.0-SNAPSHOT"
+```
+
+- [API Documentation](https://oss.sonatype.org/service/local/repositories/snapshots/archive/com/github/xuwei-k/applybuilder_2.11/0.2.0-SNAPSHOT/applybuilder_2.11-0.2.0-SNAPSHOT-javadoc.jar/!/index.html)
+
+### for scalaz 7.0.x, 7.1.x
+
+<https://github.com/xuwei-k/applybuilder/tree/0.1.x>

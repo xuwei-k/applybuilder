@@ -14,10 +14,6 @@ object build extends Build {
 
   val showDoc = TaskKey[Unit]("showDoc")
 
-  val copySources = taskKey[Unit]("copy source files")
-  val generatedSourceDir = "generated"
-  val cleanSrc = taskKey[Unit]("clean generated sources")
-
   def releaseStepAggregateCross[A](key: TaskKey[A]): ReleaseStep = ReleaseStep(
     action = { state =>
       val extracted = Project extract state
@@ -30,12 +26,14 @@ object build extends Build {
 
   private[this] final val Scala210 = "2.10.6"
 
+  private val projectName = "applybuilder"
+
   val updateReadme = { state: State =>
     val extracted = Project.extract(state)
     val scalaV = extracted get scalaBinaryVersion
     val v = extracted get version
     val org =  extracted get organization
-    val modules = ("70" :: "71" :: Nil).map("applybuilder" + _)
+    val modules = projectName :: Nil
     val snapshotOrRelease = if(extracted get isSnapshot) "snapshots" else "releases"
     val readme = "README.md"
     val readmeFile = file(readme)
@@ -66,6 +64,7 @@ object build extends Build {
   )
 
   val commonSettings = Sonatype.sonatypeSettings ++ Seq(
+    name := projectName,
     sourcesInBase := false,
     fullResolvers ~= {_.filterNot(_.name == "jcenter")},
     credentials ++= ((sys.env.get("SONATYPE_USER"), sys.env.get("SONATYPE_PASS")) match {
@@ -92,7 +91,7 @@ object build extends Build {
       pushChanges
     ),
     scalaVersion := Scala210,
-    crossScalaVersions := "2.11.7" :: Scala210 :: "2.9.3" :: Nil,
+    crossScalaVersions := "2.11.7" :: Scala210 :: "2.12.0-M3" :: Nil,
     organization := "com.github.xuwei-k",
     startYear := Some(2014),
     description := "scalaz.Apply builder",
@@ -100,7 +99,7 @@ object build extends Build {
       val tag = if(isSnapshot.value) gitHash.getOrElse("master") else { "v" + version.value }
       Seq(
         "-sourcepath", baseDirectory.value.getAbsolutePath,
-        "-doc-source-url", s"https://github.com/xuwei-k/applybuilder/tree/${tag}/ApplyBuilder.scala"
+        "-doc-source-url", s"https://github.com/xuwei-k/applybuilder/tree/${tag}€{FILE_PATH}.scala"
       )
     },
     logBuffered in Test := false,
@@ -120,14 +119,14 @@ object build extends Build {
     </scm>
     ),
     licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
-    scalacOptions ++= Seq("-deprecation", "-Xlint", "-unchecked") ++ (
-      if(scalaVersion.value.startsWith("2.9")) Seq("-Ydependent-method-types")
-      else (
-        "-language:existentials" ::
-        "-language:higherKinds" ::
-        "-language:implicitConversions" ::
-        Nil
-      )
+    scalacOptions ++= (
+      "-deprecation" ::
+      "-Xlint" ::
+      "-unchecked" ::
+      "-language:existentials" ::
+      "-language:higherKinds" ::
+      "-language:implicitConversions" ::
+      Nil
     ) ++ PartialFunction.condOpt(CrossVersion.partialVersion(scalaVersion.value)){
       case Some((2, v)) if v >= 11 => unusedWarnings
     }.toList.flatten,
@@ -138,45 +137,10 @@ object build extends Build {
     scalacOptions in (c, console) ~= {_.filterNot(unusedWarnings.toSet)}
   )
 
-  val baseSettings = commonSettings ++ Seq(
-    copySources := {
-      val fileName = "ApplyBuilder.scala"
-      IO.copyFile(
-        (baseDirectory in LocalRootProject).value / fileName,
-        (scalaSource in Compile).value / generatedSourceDir / fileName
-      )
-    },
-    compile in Compile <<= (compile in Compile) dependsOn copySources,
-    packageSrc in Compile <<= (packageSrc in Compile).dependsOn(compile in Compile),
-    cleanSrc := IO.delete((scalaSource in Compile).value / generatedSourceDir),
-    clean <<= clean dependsOn cleanSrc
-  )
-
-  val scalaz70 = Project(
-    "applybuilder70", file("scalaz70")
-  ).settings(
-    baseSettings ++ Seq(
-      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.0.8"
-    ) : _*
-  )
-
-  val scalaz71 = Project(
-    "applybuilder71", file("scalaz71")
-  ).settings(
-    baseSettings ++ Seq(
-      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.1.5"
-    ) : _*
-  )
-
   val root = Project(
-    "applybuilder", file(".")
+    projectName, file(".")
   ).settings(
-    commonSettings : _*
-  ).settings(
-    publishArtifact := false,
-    publish := {},
-    publishLocal := {}
-  ).aggregate(scalaz70, scalaz71)
-
+    commonSettings,
+    libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.0"
+  )
 }
-
