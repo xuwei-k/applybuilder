@@ -141,6 +141,6 @@ object build extends Build {
     projectName, file(".")
   ).settings(
     commonSettings,
-    libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.0"
+    libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.1"
   )
 }
