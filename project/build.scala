@@ -8,9 +8,15 @@ import xerial.sbt.Sonatype
 
 object build extends Build {
 
-  def gitHash: Option[String] = scala.util.Try(
-    sys.process.Process("git rev-parse HEAD").lines_!.head
-  ).toOption
+  private[this] def gitHash(): String = sys.process.Process("git rev-parse HEAD").lines_!.head
+
+  private[this] val tagName = Def.setting{
+    s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
+  }
+
+  private[this] val tagOrHash = Def.setting{
+    if(isSnapshot.value) gitHash() else tagName.value
+  }
 
   val showDoc = TaskKey[Unit]("showDoc")
 
@@ -74,6 +80,7 @@ object build extends Build {
         Nil
     }),
     commands += Command.command("updateReadme")(updateReadme),
+    releaseTagName := tagName.value,
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       inquireVersions,
@@ -96,7 +103,7 @@ object build extends Build {
     startYear := Some(2014),
     description := "scalaz.Apply builder",
     scalacOptions in (Compile, doc) ++= {
-      val tag = if(isSnapshot.value) gitHash.getOrElse("master") else { "v" + version.value }
+      val tag = tagOrHash.value
       Seq(
         "-sourcepath", baseDirectory.value.getAbsolutePath,
         "-doc-source-url", s"https://github.com/xuwei-k/applybuilder/tree/${tag}€{FILE_PATH}.scala"
@@ -115,7 +122,7 @@ object build extends Build {
     <scm>
       <url>git@github.com:xuwei-k/applybuilder.git</url>
       <connection>scm:git:git@github.com:xuwei-k/applybuilder.git</connection>
-      <tag>{if(isSnapshot.value) gitHash.getOrElse("master") else { "v" + version.value }}</tag>
+      <tag>{tagOrHash.value}</tag>
     </scm>
     ),
     licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
