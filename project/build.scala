@@ -5,6 +5,8 @@ import ReleasePlugin.autoImport._
 import ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
 import xerial.sbt.Sonatype
+import org.scalajs.sbtplugin.cross.CrossProject
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 
 object build extends Build {
 
@@ -144,10 +146,35 @@ object build extends Build {
     scalacOptions in (c, console) ~= {_.filterNot(unusedWarnings.toSet)}
   )
 
+  val applybuilder = CrossProject(
+    projectName, file("."), CustomCrossType
+  ).settings(
+    commonSettings : _*
+  ).settings(
+    libraryDependencies += "org.scalaz" %%% "scalaz-core" % "7.2.1"
+  ).jsSettings(
+    scalacOptions += {
+      val a = (baseDirectory in LocalRootProject).value.toURI.toString
+      val g = "https://raw.githubusercontent.com/xuwei-k/applybuilder/" + tagOrHash.value
+      s"-P:scalajs:mapSourceURI:$a->$g/"
+    }
+  )
+
+  val applybuilderJVM = applybuilder.jvm
+  val applybuilderJS = applybuilder.js
+
   val root = Project(
-    projectName, file(".")
+    "root", file(".")
   ).settings(
     commonSettings,
-    libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.1"
+    scalaSource in Compile := file("dummy"),
+    scalaSource in Test := file("dummy"),
+    PgpKeys.publishSigned := {},
+    PgpKeys.publishLocalSigned := {},
+    publishLocal := {},
+    publishArtifact in Compile := false,
+    publish := {}
+  ).aggregate(
+    applybuilderJVM, applybuilderJS
   )
 }
