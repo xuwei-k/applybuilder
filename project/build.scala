@@ -24,6 +24,9 @@ object build extends Build {
   val generatedSourceDir = "generated"
   val cleanSrc = taskKey[Unit]("clean generated sources")
 
+  val scalaz70version = SettingKey[String]("scalaz70version")
+  val scalaz71version = SettingKey[String]("scalaz71version")
+
   def releaseStepAggregateCross[A](key: TaskKey[A]): ReleaseStep = ReleaseStep(
     action = { state =>
       val extracted = Project extract state
@@ -163,7 +166,8 @@ object build extends Build {
     "applybuilder70", file("scalaz70")
   ).settings(
     baseSettings ++ Seq(
-      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.0.9"
+      scalaz70version := "7.0.9",
+      libraryDependencies += "org.scalaz" %% "scalaz-core" % scalaz70version.value
     ) : _*
   )
 
@@ -171,7 +175,8 @@ object build extends Build {
     "applybuilder71", file("scalaz71")
   ).settings(
     baseSettings ++ Seq(
-      libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.1.7"
+      scalaz71version := "7.1.7",
+      libraryDependencies += "org.scalaz" %% "scalaz-core" % scalaz71version.value
     ) : _*
   )
 
