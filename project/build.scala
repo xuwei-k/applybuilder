@@ -153,7 +153,7 @@ object build extends Build {
   ).settings(
     commonSettings : _*
   ).settings(
-    scalazVersion := "7.2.1",
+    scalazVersion := "7.2.2",
     libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
   ).jsSettings(
     scalacOptions += {
