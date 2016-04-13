@@ -146,12 +146,15 @@ object build extends Build {
     scalacOptions in (c, console) ~= {_.filterNot(unusedWarnings.toSet)}
   )
 
+  val scalazVersion = SettingKey[String]("scalazVersion")
+
   val applybuilder = CrossProject(
     projectName, file("."), CustomCrossType
   ).settings(
     commonSettings : _*
   ).settings(
-    libraryDependencies += "org.scalaz" %%% "scalaz-core" % "7.2.1"
+    scalazVersion := "7.2.1",
+    libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
   ).jsSettings(
     scalacOptions += {
       val a = (baseDirectory in LocalRootProject).value.toURI.toString
