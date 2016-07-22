@@ -8,7 +8,7 @@ import xerial.sbt.Sonatype
 import org.scalajs.sbtplugin.cross.CrossProject
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 
-object build extends Build {
+object build {
 
   private[this] def gitHash(): String = sys.process.Process("git rev-parse HEAD").lines_!.head
 
@@ -161,23 +161,5 @@ object build extends Build {
       val g = "https://raw.githubusercontent.com/xuwei-k/applybuilder/" + tagOrHash.value
       s"-P:scalajs:mapSourceURI:$a->$g/"
     }
-  )
-
-  val applybuilderJVM = applybuilder.jvm
-  val applybuilderJS = applybuilder.js
-
-  val root = Project(
-    "root", file(".")
-  ).settings(
-    commonSettings,
-    scalaSource in Compile := file("dummy"),
-    scalaSource in Test := file("dummy"),
-    PgpKeys.publishSigned := {},
-    PgpKeys.publishLocalSigned := {},
-    publishLocal := {},
-    publishArtifact in Compile := false,
-    publish := {}
-  ).aggregate(
-    applybuilderJVM, applybuilderJS
   )
 }
