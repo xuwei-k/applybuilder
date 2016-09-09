@@ -95,7 +95,10 @@ object build {
       releaseStepAggregateCross(PgpKeys.publishSigned),
       setNextVersion,
       commitNextVersion,
-      releaseStepAggregateCross(Sonatype.SonatypeKeys.sonatypeReleaseAll),
+      ReleaseStep{ state =>
+        val extracted = Project extract state
+        extracted.runTask(Sonatype.SonatypeKeys.sonatypeReleaseAll in extracted.get(thisProjectRef), state)._1
+      },
       updateReadmeProcess,
       pushChanges
     ),
