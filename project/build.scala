@@ -4,7 +4,6 @@ import sbtrelease._
 import ReleasePlugin.autoImport._
 import ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
-import xerial.sbt.Sonatype
 import org.scalajs.sbtplugin.cross.CrossProject
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 
@@ -58,7 +57,7 @@ object build {
     IO.write(readmeFile, newReadme)
     val git = new Git(extracted get baseDirectory)
     git.add(readme) ! state.log
-    git.commit("update " + readme) ! state.log
+    git.commit(message = "update " + readme, sign = false) ! state.log
     "git diff HEAD^" ! state.log
     state
   }
@@ -71,7 +70,7 @@ object build {
     Nil
   )
 
-  val commonSettings = Sonatype.sonatypeSettings ++ Seq(
+  val commonSettings = Seq(
     name := projectName,
     sourcesInBase := false,
     fullResolvers ~= {_.filterNot(_.name == "jcenter")},
@@ -95,10 +94,7 @@ object build {
       releaseStepAggregateCross(PgpKeys.publishSigned),
       setNextVersion,
       commitNextVersion,
-      ReleaseStep{ state =>
-        val extracted = Project extract state
-        extracted.runTask(Sonatype.SonatypeKeys.sonatypeReleaseAll in extracted.get(thisProjectRef), state)._1
-      },
+      releaseStepCommand("sonatypeReleaseAll"),
       updateReadmeProcess,
       pushChanges
     ),
@@ -154,8 +150,7 @@ object build {
   val applybuilder = CrossProject(
     projectName, file("."), CustomCrossType
   ).settings(
-    commonSettings : _*
-  ).settings(
+    commonSettings,
     scalazVersion := "7.2.9",
     libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
   ).jsSettings(
