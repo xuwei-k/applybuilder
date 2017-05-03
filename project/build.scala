@@ -151,7 +151,7 @@ object build {
     projectName, file("."), CustomCrossType
   ).settings(
     commonSettings,
-    scalazVersion := "7.2.9",
+    scalazVersion := "7.2.12",
     libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
   ).jsSettings(
     scalacOptions += {
