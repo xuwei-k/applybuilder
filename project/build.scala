@@ -19,8 +19,6 @@ object build {
     if(isSnapshot.value) gitHash() else tagName.value
   }
 
-  val showDoc = TaskKey[Unit]("showDoc")
-
   def releaseStepAggregateCross[A](key: TaskKey[A]): ReleaseStep = ReleaseStep(
     action = { state =>
       val extracted = Project extract state
@@ -137,10 +135,7 @@ object build {
       Nil
     ) ++ PartialFunction.condOpt(CrossVersion.partialVersion(scalaVersion.value)){
       case Some((2, v)) if v >= 11 => unusedWarnings
-    }.toList.flatten,
-    showDoc in Compile <<= (doc in Compile, target in doc in Compile) map { (_, out) =>
-      java.awt.Desktop.getDesktop.open(out / "index.html")
-    }
+    }.toList.flatten
   ) ++ Seq(Compile, Test).flatMap(c =>
     scalacOptions in (c, console) ~= {_.filterNot(unusedWarnings.toSet)}
   )
