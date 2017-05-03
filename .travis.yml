@@ -13,6 +13,8 @@ matrix:
   include:
     - scala: 2.12.2
       jdk: oraclejdk8
+    - scala: 2.13.0-M1
+      jdk: oraclejdk8
 
 script:
   - sbt ++${TRAVIS_SCALA_VERSION} update compile test:compile applybuilderJS/test:run applybuilderJVM/test:run $(if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then echo "publish"; fi)
