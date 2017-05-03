@@ -8,7 +8,7 @@
 ## release
 
 ```scala
-libraryDependencies += "com.github.xuwei-k" %% "applybuilder" % "0.2.2"
+libraryDependencies += "com.github.xuwei-k" %% "applybuilder" % "0.2.3"
 ```
 
 ## snapshot
