@@ -175,7 +175,7 @@ object build extends Build {
     "applybuilder71", file("scalaz71")
   ).settings(
     baseSettings ++ Seq(
-      scalaz71version := "7.1.7",
+      scalaz71version := "7.1.13",
       libraryDependencies += "org.scalaz" %% "scalaz-core" % scalaz71version.value
     ) : _*
   )
