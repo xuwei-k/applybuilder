@@ -4,8 +4,10 @@ import sbtrelease._
 import ReleasePlugin.autoImport._
 import ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
-import org.scalajs.sbtplugin.cross.CrossProject
-import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
+import scalanative.sbtplugin.ScalaNativePlugin.autoImport._
+import scalajscrossproject.ScalaJSCrossPlugin.autoImport.{toScalaJSGroupID => _, _}
+import sbtcrossproject.CrossProject
+import sbtcrossproject.CrossPlugin.autoImport._
 
 object build {
 
@@ -68,6 +70,10 @@ object build {
     Nil
   )
 
+  val Scala211 = "2.11.11"
+
+  private[this] val SetScala211 = releaseStepCommand("++" + Scala211)
+
   val commonSettings = Seq(
     name := projectName,
     sourcesInBase := false,
@@ -85,11 +91,15 @@ object build {
       inquireVersions,
       runClean,
       runTest,
+      SetScala211,
+      releaseStepCommand("applybuilderNative/test:run"),
       setReleaseVersion,
       commitReleaseVersion,
       updateReadmeProcess,
       tagRelease,
       releaseStepAggregateCross(PgpKeys.publishSigned),
+      SetScala211,
+      releaseStepCommand("applybuilderNative/publishSigned"),
       setNextVersion,
       commitNextVersion,
       releaseStepCommand("sonatypeReleaseAll"),
@@ -97,7 +107,7 @@ object build {
       pushChanges
     ),
     scalaVersion := Scala210,
-    crossScalaVersions := "2.11.11" :: Scala210 :: "2.12.2" :: "2.13.0-M1" :: Nil,
+    crossScalaVersions := Scala211 :: Scala210 :: "2.12.2" :: "2.13.0-M1" :: Nil,
     organization := "com.github.xuwei-k",
     startYear := Some(2014),
     description := "scalaz.Apply builder",
@@ -143,7 +153,10 @@ object build {
   val scalazVersion = SettingKey[String]("scalazVersion")
 
   val applybuilder = CrossProject(
-    projectName, file("."), CustomCrossType
+    id = projectName,
+    base = file("."),
+    crossType = CustomCrossType,
+    platforms = JSPlatform, JVMPlatform, NativePlatform
   ).settings(
     commonSettings,
     scalazVersion := "7.2.13",

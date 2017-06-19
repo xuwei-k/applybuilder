@@ -3,6 +3,9 @@ import build._
 
 val applybuilderJVM = applybuilder.jvm
 val applybuilderJS = applybuilder.js
+val applybuilderNative = applybuilder.native.settings(
+  scalaVersion := Scala211
+)
 
 val root = Project(
   "root", file(".")

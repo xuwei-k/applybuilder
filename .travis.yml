@@ -15,6 +15,14 @@ matrix:
       jdk: oraclejdk8
     - scala: 2.13.0-M1
       jdk: oraclejdk8
+    - scala: 2.11.11
+      jdk: oraclejdk8
+      sudo: required
+      dist: trusty
+      before_install:
+      - curl https://raw.githubusercontent.com/scala-native/scala-native/v0.3.0/bin/travis_setup.sh | bash -x
+      script:
+      - sbt ++$TRAVIS_SCALA_VERSION "applybuilderNative/test:run" $(if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then echo "publish"; fi)
 
 script:
   - sbt ++${TRAVIS_SCALA_VERSION} update compile test:compile applybuilderJS/test:run applybuilderJVM/test:run $(if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then echo "publish"; fi)
