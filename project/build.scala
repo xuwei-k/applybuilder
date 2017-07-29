@@ -108,7 +108,7 @@ object build {
       pushChanges
     ),
     scalaVersion := Scala210,
-    crossScalaVersions := Scala211 :: Scala210 :: "2.12.3" :: "2.13.0-M1" :: Nil,
+    crossScalaVersions := Scala211 :: Scala210 :: "2.12.3" :: "2.13.0-M2" :: Nil,
     organization := "com.github.xuwei-k",
     startYear := Some(2014),
     description := "scalaz.Apply builder",
