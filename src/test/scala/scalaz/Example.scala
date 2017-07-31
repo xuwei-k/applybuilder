@@ -7,7 +7,7 @@ import syntax.equal._
 
 object ApplyBuilderExample {
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     def a(n: Int): ValidationNel[Int, Long] = n.failureNel[Long]
 
     type T22[A] = Tuple22[A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A]
