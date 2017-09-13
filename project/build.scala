@@ -160,7 +160,7 @@ object build {
     platforms = JSPlatform, JVMPlatform, NativePlatform
   ).settings(
     commonSettings,
-    scalazVersion := "7.2.14",
+    scalazVersion := "7.2.15",
     libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
   ).jsSettings(
     scalaJSUseMainModuleInitializer in Test := true,
