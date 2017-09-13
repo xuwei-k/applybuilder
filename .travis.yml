@@ -7,7 +7,7 @@ scala:
 sudo: false
 
 jdk:
-  - oraclejdk7
+  - openjdk7
 
 matrix:
   include:
