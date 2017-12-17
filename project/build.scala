@@ -76,6 +76,12 @@ object build {
   private[this] val SetScala211 = releaseStepCommand("++" + Scala211)
 
   val commonSettings = Seq(
+    publishTo := Some(
+      if (isSnapshot.value)
+        Opts.resolver.sonatypeSnapshots
+      else
+        Opts.resolver.sonatypeStaging
+    ),
     name := projectName,
     sourcesInBase := false,
     fullResolvers ~= {_.filterNot(_.name == "jcenter")},
