@@ -32,7 +32,7 @@ object build {
 
   val sonatypeURL = "https://oss.sonatype.org/service/local/repositories/"
 
-  private[this] final val Scala210 = "2.10.6"
+  private[this] final val Scala210 = "2.10.7"
 
   private val projectName = "applybuilder"
 
@@ -71,7 +71,7 @@ object build {
     Nil
   )
 
-  val Scala211 = "2.11.11"
+  val Scala211 = "2.11.12"
 
   private[this] val SetScala211 = releaseStepCommand("++" + Scala211)
 
@@ -114,7 +114,7 @@ object build {
       pushChanges
     ),
     scalaVersion := Scala210,
-    crossScalaVersions := Scala211 :: Scala210 :: "2.12.3" :: "2.13.0-M2" :: Nil,
+    crossScalaVersions := Scala211 :: Scala210 :: "2.12.4" :: "2.13.0-M2" :: Nil,
     organization := "com.github.xuwei-k",
     startYear := Some(2014),
     description := "scalaz.Apply builder",
