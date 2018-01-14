@@ -1,7 +1,7 @@
 # ApplyBuilder
 
 [![Build Status](https://secure.travis-ci.org/xuwei-k/applybuilder.png?branch=master)](http://travis-ci.org/xuwei-k/applybuilder)
-[![scaladoc](http://javadoc-badge.appspot.com/com.github.xuwei-k/applybuilder_2.12.svg?label=scaladoc)](http://javadoc-badge.appspot.com/com.github.xuwei-k/applybuilder_2.12/scalaz/ApplyBuilder$.html?javadocio=true)
+[![scaladoc](https://javadoc-badge.appspot.com/com.github.xuwei-k/applybuilder_2.12.svg?label=scaladoc)](https://javadoc-badge.appspot.com/com.github.xuwei-k/applybuilder_2.12/scalaz/ApplyBuilder$.html?javadocio=true)
 [![maven central](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/applybuilder_2.11)
 [![Scala.js](https://www.scala-js.org/assets/badges/scalajs-0.6.13.svg)](https://www.scala-js.org)
 
