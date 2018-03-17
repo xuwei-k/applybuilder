@@ -8,6 +8,7 @@ import scalanative.sbtplugin.ScalaNativePlugin.autoImport._
 import scalajscrossproject.ScalaJSCrossPlugin.autoImport.{toScalaJSGroupID => _, _}
 import sbtcrossproject.CrossProject
 import sbtcrossproject.CrossPlugin.autoImport._
+import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.scalaJSUseMainModuleInitializer
 
 object build {
@@ -161,9 +162,11 @@ object build {
 
   val applybuilder = CrossProject(
     id = projectName,
-    base = file("."),
-    crossType = CustomCrossType,
-    platforms = JSPlatform, JVMPlatform, NativePlatform
+    base = file(".")
+  )(
+    JSPlatform, JVMPlatform, NativePlatform
+  ).crossType(
+    CustomCrossType
   ).settings(
     commonSettings,
     scalazVersion := "7.2.19",
