@@ -2,11 +2,12 @@ import sbtrelease._
 import ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
 import sbtcrossproject.CrossProject
+import scala.sys.process.Process
 
 def Scala210 = "2.10.7"
 def Scala211 = "2.11.12"
 
-def gitHash(): String = sys.process.Process("git rev-parse HEAD").lines_!.head
+def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
 
 val tagName = Def.setting{
   s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
@@ -50,8 +51,8 @@ val updateReadme = { state: State =>
   IO.write(readmeFile, newReadme)
   val git = new Git(extracted get baseDirectory)
   git.add(readme) ! state.log
-  git.commit(message = "update " + readme, sign = false) ! state.log
-  "git diff HEAD^" ! state.log
+  git.commit(message = "update " + readme, sign = false, signOff = false) ! state.log
+  Process("git diff HEAD^") ! state.log
   state
 }
 

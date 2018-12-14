@@ -3,20 +3,18 @@ language: scala
 scala:
   - 2.11.12
   - 2.10.7
+  - 2.12.7
+  - 2.13.0-M5
 
 sudo: false
 
 jdk:
-  - openjdk7
+  - oraclejdk8
 
 matrix:
   include:
     - scala: 2.12.7
       jdk: openjdk11
-    - scala: 2.12.7
-      jdk: oraclejdk8
-    - scala: 2.13.0-M5
-      jdk: oraclejdk8
     - scala: 2.11.12
       jdk: oraclejdk8
       sudo: required
