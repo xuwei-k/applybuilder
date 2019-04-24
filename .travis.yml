@@ -17,6 +17,7 @@ matrix:
       jdk: openjdk11
     - scala: 2.11.12
       jdk: oraclejdk8
+      env: SCALA_NATIVE
       sudo: required
       dist: trusty
       before_install:
