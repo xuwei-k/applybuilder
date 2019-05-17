@@ -104,7 +104,7 @@ val commonSettings = Def.settings(
     pushChanges
   ),
   scalaVersion := Scala210,
-  crossScalaVersions := Scala211 :: Scala210 :: "2.12.8" :: "2.13.0-RC1" :: Nil,
+  crossScalaVersions := Scala211 :: Scala210 :: "2.12.8" :: "2.13.0-RC2" :: Nil,
   organization := "com.github.xuwei-k",
   startYear := Some(2014),
   description := "scalaz.Apply builder",
