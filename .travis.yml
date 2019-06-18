@@ -1,5 +1,7 @@
 language: scala
 
+dist: xenial
+
 scala:
   - 2.11.12
   - 2.10.7
@@ -9,17 +11,16 @@ scala:
 sudo: false
 
 jdk:
-  - oraclejdk8
+  - openjdk8
 
 matrix:
   include:
     - scala: 2.12.8
       jdk: openjdk11
     - scala: 2.11.12
-      jdk: oraclejdk8
+      jdk: openjdk8
       env: SCALA_NATIVE
       sudo: required
-      dist: trusty
       before_install:
       - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
       script:
