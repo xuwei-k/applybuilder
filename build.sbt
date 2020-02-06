@@ -162,6 +162,7 @@ val applybuilder = CrossProject(
   libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
 ).jsSettings(
   scalaJSUseMainModuleInitializer in Test := true,
+  scalaJSUseTestModuleInitializer in Test := false,
   scalacOptions += {
     val a = (baseDirectory in LocalRootProject).value.toURI.toString
     val g = "https://raw.githubusercontent.com/xuwei-k/applybuilder/" + tagOrHash.value
