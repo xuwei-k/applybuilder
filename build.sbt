@@ -4,7 +4,6 @@ import com.typesafe.sbt.pgp.PgpKeys
 import sbtcrossproject.CrossProject
 import scala.sys.process.Process
 
-def Scala210 = "2.10.7"
 def Scala211 = "2.11.12"
 
 def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
@@ -103,8 +102,8 @@ val commonSettings = Def.settings(
     updateReadmeProcess,
     pushChanges
   ),
-  scalaVersion := Scala210,
-  crossScalaVersions := Scala211 :: Scala210 :: "2.12.10" :: "2.13.1" :: Nil,
+  scalaVersion := Scala211,
+  crossScalaVersions := Scala211 :: "2.12.10" :: "2.13.1" :: Nil,
   organization := "com.github.xuwei-k",
   startYear := Some(2014),
   description := "scalaz.Apply builder",
