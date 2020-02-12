@@ -64,12 +64,7 @@ val unusedWarnings = (
 val SetScala211 = releaseStepCommand("++" + Scala211)
 
 val commonSettings = Def.settings(
-  publishTo := Some(
-    if (isSnapshot.value)
-      Opts.resolver.sonatypeSnapshots
-    else
-      Opts.resolver.sonatypeStaging
-  ),
+  publishTo := sonatypePublishToBundle.value,
   name := projectName,
   sourcesInBase := false,
   fullResolvers ~= {_.filterNot(_.name == "jcenter")},
@@ -95,9 +90,9 @@ val commonSettings = Def.settings(
     releaseStepAggregateCross(PgpKeys.publishSigned),
     SetScala211,
     releaseStepCommand("applybuilderNative/publishSigned"),
+    releaseStepCommandAndRemaining("sonatypeBundleRelease"),
     setNextVersion,
     commitNextVersion,
-    releaseStepCommand("sonatypeReleaseAll"),
     updateReadmeProcess,
     pushChanges
   ),
