@@ -125,6 +125,16 @@ val commonSettings = Def.settings(
   </scm>
   ),
   licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
+  scalacOptions ++= {
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, v)) if v <= 12 =>
+        Seq(
+          "-Ypartial-unification"
+        )
+      case _ =>
+        Nil
+    }
+  },
   scalacOptions ++= (
     "-deprecation" ::
     "-Xlint" ::
@@ -152,7 +162,7 @@ val applybuilder = CrossProject(
   CustomCrossType
 ).settings(
   commonSettings,
-  scalazVersion := "7.2.30",
+  scalazVersion := "7.3.0",
   libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
 ).jsSettings(
   scalaJSUseMainModuleInitializer in Test := true,

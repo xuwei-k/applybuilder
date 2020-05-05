@@ -22,7 +22,7 @@ object ApplyBuilderExample {
     println(b)
 
     (b: @unchecked) match {
-      case Failure(errors) => errors assert_=== NonEmptyList(1, 2 to 22 :_*)
+      case Failure(errors) => errors assert_=== NonEmptyList.fromSeq(1, 2 to 22)
     }
   }
 
