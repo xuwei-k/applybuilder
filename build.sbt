@@ -162,7 +162,7 @@ val applybuilder = CrossProject(
   CustomCrossType
 ).settings(
   commonSettings,
-  scalazVersion := "7.3.1",
+  scalazVersion := "7.3.2",
   libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
 ).jsSettings(
   scalaJSUseMainModuleInitializer in Test := true,
