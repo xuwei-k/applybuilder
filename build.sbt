@@ -97,16 +97,20 @@ val commonSettings = Def.settings(
     pushChanges
   ),
   scalaVersion := Scala211,
-  crossScalaVersions := Scala211 :: "2.12.12" :: "2.13.3" :: Nil,
+  crossScalaVersions := Scala211 :: "2.12.12" :: "2.13.3" :: "3.0.0-M1" :: Nil,
   organization := "com.github.xuwei-k",
   startYear := Some(2014),
   description := "scalaz.Apply builder",
   scalacOptions in (Compile, doc) ++= {
     val tag = tagOrHash.value
-    Seq(
-      "-sourcepath", baseDirectory.value.getAbsolutePath,
-      "-doc-source-url", s"https://github.com/xuwei-k/applybuilder/tree/${tag}€{FILE_PATH}.scala"
-    )
+    if (isDotty.value) {
+      Nil
+    } else {
+      Seq(
+        "-sourcepath", baseDirectory.value.getAbsolutePath,
+        "-doc-source-url", s"https://github.com/xuwei-k/applybuilder/tree/${tag}€{FILE_PATH}.scala"
+      )
+    }
   },
   logBuffered in Test := false,
   pomExtra := (
@@ -163,14 +167,20 @@ val applybuilder = CrossProject(
 ).settings(
   commonSettings,
   scalazVersion := "7.3.2",
-  libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
+  libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value withDottyCompat scalaVersion.value,
 ).jsSettings(
   scalaJSUseMainModuleInitializer in Test := true,
   scalaJSUseTestModuleInitializer in Test := false,
-  scalacOptions += {
+  scalacOptions ++= {
     val a = (baseDirectory in LocalRootProject).value.toURI.toString
     val g = "https://raw.githubusercontent.com/xuwei-k/applybuilder/" + tagOrHash.value
-    s"-P:scalajs:mapSourceURI:$a->$g/"
+    if (isDottyJS.value) {
+      Nil
+    } else {
+      Seq(
+        s"-P:scalajs:mapSourceURI:$a->$g/"
+      )
+    }
   }
 )
 
