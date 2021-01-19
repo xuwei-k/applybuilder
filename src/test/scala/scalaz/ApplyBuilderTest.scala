@@ -4,10 +4,13 @@ import ApplyBuilder._
 import std.AllInstances._
 import syntax.validation._
 import syntax.equal._
+import org.junit.Assert._
+import org.junit.Test
 
-object ApplyBuilderExample {
+class ApplyBuilderTest {
 
-  def main(args: Array[String]): Unit = {
+  @Test
+  def test1(): Unit = {
     def a(n: Int): ValidationNel[Int, Long] = n.failureNel[Long]
 
     type T22[A] = Tuple22[A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A]

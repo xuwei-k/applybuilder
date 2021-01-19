@@ -61,8 +61,6 @@ val unusedWarnings = (
   Nil
 )
 
-val SetScala211 = releaseStepCommand("++" + Scala211)
-
 val commonSettings = Def.settings(
   publishTo := sonatypePublishToBundle.value,
   name := projectName,
@@ -81,15 +79,12 @@ val commonSettings = Def.settings(
     inquireVersions,
     runClean,
     runTest,
-    SetScala211,
-    releaseStepCommand("applybuilderNative/test:run"),
     setReleaseVersion,
     commitReleaseVersion,
     updateReadmeProcess,
     tagRelease,
     releaseStepAggregateCross(PgpKeys.publishSigned),
-    SetScala211,
-    releaseStepCommand("applybuilderNative/publishSigned"),
+    releaseStepCommandAndRemaining("+ applybuilderNative/publishSigned"),
     releaseStepCommandAndRemaining("sonatypeBundleRelease"),
     setNextVersion,
     commitNextVersion,
@@ -97,7 +92,7 @@ val commonSettings = Def.settings(
     pushChanges
   ),
   scalaVersion := Scala211,
-  crossScalaVersions := Scala211 :: "2.12.12" :: "2.13.4" :: "3.0.0-M1" :: Nil,
+  crossScalaVersions := Scala211 :: "2.12.13" :: "2.13.4" :: "3.0.0-M3" :: Nil,
   organization := "com.github.xuwei-k",
   startYear := Some(2014),
   description := "scalaz.Apply builder",
@@ -166,11 +161,15 @@ val applybuilder = CrossProject(
   CustomCrossType
 ).settings(
   commonSettings,
-  scalazVersion := "7.3.2",
+  scalazVersion := "7.3.3",
+  testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
+  libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
   libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value withDottyCompat scalaVersion.value,
+).nativeSettings(
+  crossScalaVersions ~= (_.filter(_ startsWith "2.1")),
+  libraryDependencies += "org.scala-native" %%% "junit-runtime" % nativeVersion,
+  addCompilerPlugin("org.scala-native" % "junit-plugin" % nativeVersion cross CrossVersion.full)
 ).jsSettings(
-  scalaJSUseMainModuleInitializer in Test := true,
-  scalaJSUseTestModuleInitializer in Test := false,
   scalacOptions ++= {
     val a = (baseDirectory in LocalRootProject).value.toURI.toString
     val g = "https://raw.githubusercontent.com/xuwei-k/applybuilder/" + tagOrHash.value
@@ -185,10 +184,8 @@ val applybuilder = CrossProject(
 )
 
 val applybuilderJVM = applybuilder.jvm
-val applybuilderJS = applybuilder.js
-val applybuilderNative = applybuilder.native.settings(
-  scalaVersion := Scala211
-)
+val applybuilderJS = applybuilder.js.enablePlugins(ScalaJSJUnitPlugin)
+val applybuilderNative = applybuilder.native
 
 val root = Project(
   "root", file(".")
