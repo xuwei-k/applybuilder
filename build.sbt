@@ -170,16 +170,16 @@ val applybuilder = CrossProject(
   libraryDependencies += "org.scala-native" %%% "junit-runtime" % nativeVersion,
   addCompilerPlugin("org.scala-native" % "junit-plugin" % nativeVersion cross CrossVersion.full)
 ).jsSettings(
-  scalacOptions ++= {
+  scalacOptions += {
     val a = (baseDirectory in LocalRootProject).value.toURI.toString
     val g = "https://raw.githubusercontent.com/xuwei-k/applybuilder/" + tagOrHash.value
-    if (isDottyJS.value) {
-      Nil
-    } else {
-      Seq(
-        s"-P:scalajs:mapSourceURI:$a->$g/"
-      )
+    val key = CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((3, _)) =>
+        "-scalajs-mapSourceURI"
+      case _ =>
+        "-P:scalajs:mapSourceURI"
     }
+    s"${key}:$a->$g/"
   }
 )
 
