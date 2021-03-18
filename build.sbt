@@ -191,8 +191,8 @@ val root = Project(
   "root", file(".")
 ).settings(
   commonSettings,
-  Compile / scalaSource := file("dummy"),
-  Test / scalaSource := file("dummy"),
+  Compile / scalaSource := baseDirectory.value / "dummy",
+  Test / scalaSource := baseDirectory.value / "dummy",
   PgpKeys.publishSigned := {},
   PgpKeys.publishLocalSigned := {},
   publishLocal := {},
