@@ -8,7 +8,7 @@ def Scala211 = "2.11.12"
 def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
 
 val tagName = Def.setting{
-  s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
+  s"v${if (releaseUseGlobalVersion.value) (ThisBuild / version).value else version.value}"
 }
 
 val tagOrHash = Def.setting{
@@ -18,7 +18,7 @@ val tagOrHash = Def.setting{
 def releaseStepAggregateCross[A](key: TaskKey[A]): ReleaseStep = ReleaseStep(
   action = { state =>
     val extracted = Project extract state
-    extracted.runAggregated(key in Global in extracted.get(thisProjectRef), state)
+    extracted.runAggregated(extracted.get(thisProjectRef) / (Global / key), state)
   },
   enableCrossBuild = true
 )
@@ -96,7 +96,7 @@ val commonSettings = Def.settings(
   organization := "com.github.xuwei-k",
   startYear := Some(2014),
   description := "scalaz.Apply builder",
-  scalacOptions in (Compile, doc) ++= {
+  (Compile / doc / scalacOptions) ++= {
     val tag = tagOrHash.value
     if (isDotty.value) {
       Nil
@@ -107,7 +107,7 @@ val commonSettings = Def.settings(
       )
     }
   },
-  logBuffered in Test := false,
+  Test / logBuffered := false,
   pomExtra := (
   <url>https://github.com/xuwei-k/applybuilder</url>
   <developers>
@@ -146,7 +146,7 @@ val commonSettings = Def.settings(
     case Some((2, v)) if v >= 11 => unusedWarnings
   }.toList.flatten,
   Seq(Compile, Test).flatMap(c =>
-    scalacOptions in (c, console) ~= {_.filterNot(unusedWarnings.toSet)}
+    c / console / scalacOptions ~= {_.filterNot(unusedWarnings.toSet)}
   )
 )
 
@@ -171,7 +171,7 @@ val applybuilder = CrossProject(
   addCompilerPlugin("org.scala-native" % "junit-plugin" % nativeVersion cross CrossVersion.full)
 ).jsSettings(
   scalacOptions += {
-    val a = (baseDirectory in LocalRootProject).value.toURI.toString
+    val a = (LocalRootProject / baseDirectory).value.toURI.toString
     val g = "https://raw.githubusercontent.com/xuwei-k/applybuilder/" + tagOrHash.value
     val key = CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((3, _)) =>
@@ -191,12 +191,12 @@ val root = Project(
   "root", file(".")
 ).settings(
   commonSettings,
-  scalaSource in Compile := file("dummy"),
-  scalaSource in Test := file("dummy"),
+  Compile / scalaSource := file("dummy"),
+  Test / scalaSource := file("dummy"),
   PgpKeys.publishSigned := {},
   PgpKeys.publishLocalSigned := {},
   publishLocal := {},
-  publishArtifact in Compile := false,
+  Compile / publishArtifact := false,
   publish := {}
 ).aggregate(
   applybuilderJVM, applybuilderJS
