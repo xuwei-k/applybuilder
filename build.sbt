@@ -3,6 +3,10 @@ import ReleaseStateTransformations._
 import sbtcrossproject.CrossProject
 import scala.sys.process.Process
 
+val isScala3 = Def.setting(
+  CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 3)
+)
+
 def Scala211 = "2.11.12"
 
 def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
@@ -98,7 +102,7 @@ val commonSettings = Def.settings(
   description := "scalaz.Apply builder",
   (Compile / doc / scalacOptions) ++= {
     val tag = tagOrHash.value
-    if (isDotty.value) {
+    if (isScala3.value) {
       Nil
     } else {
       Seq(
@@ -164,7 +168,7 @@ val applybuilder = CrossProject(
   scalazVersion := "7.3.3",
   testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
   libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
-  libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value withDottyCompat scalaVersion.value,
+  libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value cross CrossVersion.for3Use2_13
 ).nativeSettings(
   crossScalaVersions ~= (_.filter(_ startsWith "2.1")),
   libraryDependencies += "org.scala-native" %%% "junit-runtime" % nativeVersion,
