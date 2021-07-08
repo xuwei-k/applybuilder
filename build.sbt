@@ -165,7 +165,7 @@ val applybuilder = CrossProject(
   CustomCrossType
 ).settings(
   commonSettings,
-  scalazVersion := "7.3.3",
+  scalazVersion := "7.3.4",
   testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
   libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
   libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value cross CrossVersion.for3Use2_13
