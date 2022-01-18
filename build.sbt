@@ -168,7 +168,7 @@ val applybuilder = CrossProject(
   scalazVersion := "7.3.6",
   testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
   libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % "test",
-  libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value cross CrossVersion.for3Use2_13
+  libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
 ).nativeSettings(
   crossScalaVersions ~= (_.filter(_ startsWith "2.1")),
   libraryDependencies += "org.scala-native" %%% "junit-runtime" % nativeVersion,
