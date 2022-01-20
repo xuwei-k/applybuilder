@@ -170,7 +170,6 @@ val applybuilder = CrossProject(
   libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % "test",
   libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
 ).nativeSettings(
-  crossScalaVersions ~= (_.filter(_ startsWith "2.1")),
   libraryDependencies += "org.scala-native" %%% "junit-runtime" % nativeVersion,
   addCompilerPlugin("org.scala-native" % "junit-plugin" % nativeVersion cross CrossVersion.full)
 ).jsSettings(
