@@ -96,7 +96,7 @@ val commonSettings = Def.settings(
     pushChanges
   ),
   scalaVersion := Scala211,
-  crossScalaVersions := Scala211 :: "2.12.15" :: "2.13.8" :: "3.1.1" :: Nil,
+  crossScalaVersions := Scala211 :: "2.12.15" :: "2.13.8" :: Nil,
   organization := "com.github.xuwei-k",
   startYear := Some(2014),
   description := "scalaz.Apply builder",
@@ -169,8 +169,10 @@ val applybuilder = CrossProject(
   testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
   libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % "test",
   libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
+).platformsSettings(JVMPlatform, JSPlatform)(
+  crossScalaVersions += "3.1.1",
 ).nativeSettings(
-  crossScalaVersions ~= (_.filter(_ startsWith "2.1")),
+  crossScalaVersions += "3.1.0",
   libraryDependencies += "org.scala-native" %%% "junit-runtime" % nativeVersion,
   addCompilerPlugin("org.scala-native" % "junit-plugin" % nativeVersion cross CrossVersion.full)
 ).jsSettings(
