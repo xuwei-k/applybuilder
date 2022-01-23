@@ -171,7 +171,18 @@ val applybuilder = CrossProject(
   libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
 ).nativeSettings(
   libraryDependencies += "org.scala-native" %%% "junit-runtime" % nativeVersion,
-  addCompilerPlugin("org.scala-native" % "junit-plugin" % nativeVersion cross CrossVersion.full)
+  addCompilerPlugin("org.scala-native" % "junit-plugin" % nativeVersion cross CrossVersion.full),
+  pomPostProcess := { node =>
+    import scala.xml._
+    import scala.xml.transform._
+    new RuleTransformer(new RewriteRule{
+      override def transform(n: Node) =
+        if (n.label == "dependency" && (n \ "artifactId").text.startsWith("junit-runtime_native"))
+          NodeSeq.Empty
+        else
+          n
+    }).transform(node)(0)
+  },
 ).jsSettings(
   scalacOptions += {
     val a = (LocalRootProject / baseDirectory).value.toURI.toString
