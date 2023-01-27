@@ -4,7 +4,6 @@ import ApplyBuilder._
 import std.AllInstances._
 import syntax.validation._
 import syntax.equal._
-import org.junit.Assert._
 import org.junit.Test
 
 class ApplyBuilderTest {
