@@ -5,5 +5,5 @@
 [![Scala.js](https://www.scala-js.org/assets/badges/scalajs-1.4.0.svg)](https://www.scala-js.org)
 
 ```scala
-libraryDependencies += "com.github.xuwei-k" %% "applybuilder" % "0.3.1"
+libraryDependencies += "com.github.xuwei-k" %% "applybuilder" % "0.3.2"
 ```
