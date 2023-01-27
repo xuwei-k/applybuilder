@@ -7,7 +7,7 @@ val isScala3 = Def.setting(
   CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 3)
 )
 
-def Scala211 = "2.11.12"
+def Scala212 = "2.12.17"
 
 def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
 
@@ -95,8 +95,8 @@ val commonSettings = Def.settings(
     updateReadmeProcess,
     pushChanges
   ),
-  scalaVersion := Scala211,
-  crossScalaVersions := Scala211 :: "2.12.17" :: "2.13.10" :: "3.2.2" :: Nil,
+  scalaVersion := Scala212,
+  crossScalaVersions := Scala212 :: "2.13.10" :: "3.2.2" :: Nil,
   organization := "com.github.xuwei-k",
   startYear := Some(2014),
   description := "scalaz.Apply builder",
