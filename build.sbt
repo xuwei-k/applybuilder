@@ -127,7 +127,7 @@ val commonSettings = Def.settings(
     <tag>{tagOrHash.value}</tag>
   </scm>
   ),
-  licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
+  licenses := Seq("MIT" -> url("https://opensource.org/license/MIT")),
   scalacOptions ++= {
     CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, v)) if v <= 12 =>
