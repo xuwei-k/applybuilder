@@ -7,7 +7,7 @@ val isScala3 = Def.setting(
   CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 3)
 )
 
-def Scala212 = "2.12.20"
+def Scala212 = "2.12.21"
 
 def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
 
