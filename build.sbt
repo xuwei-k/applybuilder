@@ -25,10 +25,10 @@ val projectName = "applybuilder"
 val updateReadme: State => State = { state =>
   val extracted = Project.extract(state)
   val scalaV = "2.13"
-  val v = extracted get version
-  val org = extracted get organization
+  val v = extracted.get(version)
+  val org = extracted.get(organization)
   val modules = projectName :: Nil
-  val snapshotOrRelease = if (extracted get isSnapshot) "snapshots" else "releases"
+  val snapshotOrRelease = if (extracted.get(isSnapshot)) "snapshots" else "releases"
   val readme = "README.md"
   val readmeFile = file(readme)
   val newReadme = IO
@@ -42,7 +42,7 @@ val updateReadme: State => State = { state =>
     }
     .mkString("", "\n", "\n")
   IO.write(readmeFile, newReadme)
-  val git = new Git(extracted get baseDirectory)
+  val git = new Git(extracted.get(baseDirectory))
   git.add(readme) ! state.log
   git.commit(message = "update " + readme, sign = false, signOff = false) ! state.log
   Process("git diff HEAD^") ! state.log
