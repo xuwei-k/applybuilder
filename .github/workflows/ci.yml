@@ -11,32 +11,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - name: jvm
-          - name: js
-          - name: native
+        java:
+          - 8
+          - 25
     steps:
     - uses: actions/checkout@v6
     - uses: actions/setup-java@v5
       with:
-        java-version: 8
+        java-version: "${{ matrix.java }}"
         distribution: adopt
     - uses: coursier/cache-action@v8
     - uses: sbt/setup-sbt@v1
-    - run: sbt -v scalafmtSbtCheck "+ scalafmtCheckAll"
-    - run: |
-        case "${{ matrix.name }}" in
-          "jvm")
-            sbt -v "+ applybuilderJVM/test"
-            ;;
-          "js")
-            sbt -v "+ applybuilderJS/test"
-            ;;
-          "native")
-            sbt -v "+ applybuilderNative/test"
-            ;;
-          *)
-            echo "unknown job name"
-            exit 1
-        esac
-        rm -rf "$HOME/.ivy2/local" || true
+    - run: sbt -v
+           -J-Xmx6G
+           scalafmtSbtCheck
+           scalafmtCheckAll
+           test
