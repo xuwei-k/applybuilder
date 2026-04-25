@@ -22,7 +22,7 @@ val tagOrHash = Def.setting {
 
 val projectName = "applybuilder"
 
-val updateReadme = { state: State =>
+val updateReadme: State => State = { state =>
   val extracted = Project.extract(state)
   val scalaV = "2.13"
   val v = extracted get version
