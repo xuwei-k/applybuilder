@@ -27,8 +27,6 @@ def releaseStepAggregateCross[A](key: TaskKey[A]): ReleaseStep = ReleaseStep(
   enableCrossBuild = true
 )
 
-val sonatypeURL = "https://oss.sonatype.org/service/local/repositories/"
-
 val projectName = "applybuilder"
 
 val updateReadme = { state: State =>
@@ -45,9 +43,6 @@ val updateReadme = { state: State =>
     val i = modules.indexWhere(line.contains)
     if(line.startsWith("libraryDependencies") && matchReleaseOrSnapshot){
       s"""libraryDependencies += "${org}" %% "${modules(i)}" % "$v""""
-    }else if(line.contains(sonatypeURL) && matchReleaseOrSnapshot){
-      val n = modules(i)
-      s"- [API Documentation](${sonatypeURL}${snapshotOrRelease}/archive/${org.replace('.','/')}/${n}_${scalaV}/${v}/${n}_${scalaV}-${v}-javadoc.jar/!/index.html)"
     }else line
   }.mkString("", "\n", "\n")
   IO.write(readmeFile, newReadme)
@@ -70,12 +65,6 @@ val commonSettings = Def.settings(
   name := projectName,
   sourcesInBase := false,
   fullResolvers ~= {_.filterNot(_.name == "jcenter")},
-  credentials ++= ((sys.env.get("SONATYPE_USER"), sys.env.get("SONATYPE_PASS")) match {
-    case (Some(user), Some(pass)) =>
-      Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", user, pass) :: Nil
-    case _ =>
-      Nil
-  }),
   commands += Command.command("updateReadme")(updateReadme),
   releaseTagName := tagName.value,
   releaseProcess := Seq[ReleaseStep](
