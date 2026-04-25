@@ -23,6 +23,7 @@ jobs:
         distribution: adopt
     - uses: coursier/cache-action@v8
     - uses: sbt/setup-sbt@v1
+    - run: sbt -v scalafmtSbtCheck "+ scalafmtCheckAll"
     - run: |
         case "${{ matrix.name }}" in
           "jvm")

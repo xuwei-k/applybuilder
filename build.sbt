@@ -11,12 +11,12 @@ def Scala212 = "2.12.21"
 
 def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
 
-val tagName = Def.setting{
+val tagName = Def.setting {
   s"v${if (releaseUseGlobalVersion.value) (ThisBuild / version).value else version.value}"
 }
 
-val tagOrHash = Def.setting{
-  if(isSnapshot.value) gitHash() else tagName.value
+val tagOrHash = Def.setting {
+  if (isSnapshot.value) gitHash() else tagName.value
 }
 
 def releaseStepAggregateCross[A](key: TaskKey[A]): ReleaseStep = ReleaseStep(
@@ -33,18 +33,22 @@ val updateReadme = { state: State =>
   val extracted = Project.extract(state)
   val scalaV = "2.13"
   val v = extracted get version
-  val org =  extracted get organization
+  val org = extracted get organization
   val modules = projectName :: Nil
-  val snapshotOrRelease = if(extracted get isSnapshot) "snapshots" else "releases"
+  val snapshotOrRelease = if (extracted get isSnapshot) "snapshots" else "releases"
   val readme = "README.md"
   val readmeFile = file(readme)
-  val newReadme = Predef.augmentString(IO.read(readmeFile)).lines.map{ line =>
-    val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
-    val i = modules.indexWhere(line.contains)
-    if(line.startsWith("libraryDependencies") && matchReleaseOrSnapshot){
-      s"""libraryDependencies += "${org}" %% "${modules(i)}" % "$v""""
-    }else line
-  }.mkString("", "\n", "\n")
+  val newReadme = Predef
+    .augmentString(IO.read(readmeFile))
+    .lines
+    .map { line =>
+      val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
+      val i = modules.indexWhere(line.contains)
+      if (line.startsWith("libraryDependencies") && matchReleaseOrSnapshot) {
+        s"""libraryDependencies += "${org}" %% "${modules(i)}" % "$v""""
+      } else line
+    }
+    .mkString("", "\n", "\n")
   IO.write(readmeFile, newReadme)
   val git = new Git(extracted get baseDirectory)
   git.add(readme) ! state.log
@@ -92,26 +96,28 @@ val commonSettings = Def.settings(
       Nil
     } else {
       Seq(
-        "-sourcepath", baseDirectory.value.getAbsolutePath,
-        "-doc-source-url", s"https://github.com/xuwei-k/applybuilder/tree/${tag}€{FILE_PATH}.scala"
+        "-sourcepath",
+        baseDirectory.value.getAbsolutePath,
+        "-doc-source-url",
+        s"https://github.com/xuwei-k/applybuilder/tree/${tag}€{FILE_PATH}.scala"
       )
     }
   },
   Test / logBuffered := false,
   pomExtra := (
-  <url>https://github.com/xuwei-k/applybuilder</url>
-  <developers>
-    <developer>
-      <id>xuwei-k</id>
-      <name>Kenji Yoshida</name>
-      <url>https://github.com/xuwei-k</url>
-    </developer>
-  </developers>
-  <scm>
-    <url>git@github.com:xuwei-k/applybuilder.git</url>
-    <connection>scm:git:git@github.com:xuwei-k/applybuilder.git</connection>
-    <tag>{tagOrHash.value}</tag>
-  </scm>
+    <url>https://github.com/xuwei-k/applybuilder</url>
+    <developers>
+      <developer>
+        <id>xuwei-k</id>
+        <name>Kenji Yoshida</name>
+        <url>https://github.com/xuwei-k</url>
+      </developer>
+    </developers>
+    <scm>
+      <url>git@github.com:xuwei-k/applybuilder.git</url>
+      <connection>scm:git:git@github.com:xuwei-k/applybuilder.git</connection>
+      <tag>{tagOrHash.value}</tag>
+    </scm>
   ),
   licenses := Seq("MIT" -> url("https://opensource.org/license/MIT")),
   scalacOptions ++= {
@@ -131,12 +137,13 @@ val commonSettings = Def.settings(
     "-unchecked",
     "-language:existentials",
     "-language:implicitConversions",
-  ) ++ PartialFunction.condOpt(CrossVersion.partialVersion(scalaVersion.value)){
-    case Some((2, v)) if v >= 11 => unusedWarnings
-  }.toList.flatten,
-  Seq(Compile, Test).flatMap(c =>
-    c / console / scalacOptions ~= {_.filterNot(unusedWarnings.toSet)}
-  )
+  ) ++ PartialFunction
+    .condOpt(CrossVersion.partialVersion(scalaVersion.value)) {
+      case Some((2, v)) if v >= 11 => unusedWarnings
+    }
+    .toList
+    .flatten,
+  Seq(Compile, Test).flatMap(c => c / console / scalacOptions ~= { _.filterNot(unusedWarnings.toSet) })
 )
 
 val scalazVersion = SettingKey[String]("scalazVersion")
@@ -145,7 +152,9 @@ val applybuilder = CrossProject(
   id = projectName,
   base = file(".")
 )(
-  JSPlatform, JVMPlatform, NativePlatform
+  JSPlatform,
+  JVMPlatform,
+  NativePlatform
 ).crossType(
   CustomCrossType
 ).settings(
@@ -173,7 +182,8 @@ val applybuilderJS = applybuilder.js.enablePlugins(ScalaJSJUnitPlugin)
 val applybuilderNative = applybuilder.native.enablePlugins(ScalaNativeJUnitPlugin)
 
 val root = Project(
-  "root", file(".")
+  "root",
+  file(".")
 ).settings(
   commonSettings,
   Compile / scalaSource := baseDirectory.value / "dummy",
@@ -184,5 +194,7 @@ val root = Project(
   Compile / publishArtifact := false,
   publish := {}
 ).aggregate(
-  applybuilderJVM, applybuilderJS, applybuilderNative
+  applybuilderJVM,
+  applybuilderJS,
+  applybuilderNative
 )
