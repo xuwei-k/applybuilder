@@ -55,9 +55,8 @@ val updateReadme = { state: State =>
 
 val updateReadmeProcess: ReleaseStep = updateReadme
 
-val unusedWarnings = (
-  "-Ywarn-unused" ::
-  Nil
+val unusedWarnings = Seq(
+  "-Ywarn-unused",
 )
 
 val commonSettings = Def.settings(
@@ -126,13 +125,12 @@ val commonSettings = Def.settings(
         Nil
     }
   },
-  scalacOptions ++= (
-    "-deprecation" ::
-    "-Xlint" ::
-    "-unchecked" ::
-    "-language:existentials" ::
-    "-language:implicitConversions" ::
-    Nil
+  scalacOptions ++= Seq(
+    "-deprecation",
+    "-Xlint",
+    "-unchecked",
+    "-language:existentials",
+    "-language:implicitConversions",
   ) ++ PartialFunction.condOpt(CrossVersion.partialVersion(scalaVersion.value)){
     case Some((2, v)) if v >= 11 => unusedWarnings
   }.toList.flatten,
