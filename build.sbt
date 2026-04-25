@@ -1,6 +1,5 @@
 import sbtrelease._
 import ReleaseStateTransformations._
-import sbtcrossproject.CrossProject
 import scala.sys.process.Process
 
 val isScala3 = Def.setting(
@@ -8,6 +7,8 @@ val isScala3 = Def.setting(
 )
 
 def Scala212 = "2.12.21"
+
+val scalaVersions = Seq(Scala212, "2.13.18", "3.3.7")
 
 def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
 
@@ -18,14 +19,6 @@ val tagName = Def.setting {
 val tagOrHash = Def.setting {
   if (isSnapshot.value) gitHash() else tagName.value
 }
-
-def releaseStepAggregateCross[A](key: TaskKey[A]): ReleaseStep = ReleaseStep(
-  action = { state =>
-    val extracted = Project extract state
-    extracted.runAggregated(extracted.get(thisProjectRef) / (Global / key), state)
-  },
-  enableCrossBuild = true
-)
 
 val projectName = "applybuilder"
 
@@ -78,15 +71,13 @@ val commonSettings = Def.settings(
     commitReleaseVersion,
     updateReadmeProcess,
     tagRelease,
-    releaseStepAggregateCross(PgpKeys.publishSigned),
+    releaseStepCommandAndRemaining("publishSigned"),
     releaseStepCommandAndRemaining("sonaRelease"),
     setNextVersion,
     commitNextVersion,
     updateReadmeProcess,
     pushChanges
   ),
-  scalaVersion := Scala212,
-  crossScalaVersions := Scala212 :: "2.13.18" :: "3.3.7" :: Nil,
   organization := "com.github.xuwei-k",
   startYear := Some(2014),
   description := "scalaz.Apply builder",
@@ -148,44 +139,54 @@ val commonSettings = Def.settings(
 
 val scalazVersion = SettingKey[String]("scalazVersion")
 
-val applybuilder = CrossProject(
-  id = projectName,
-  base = file(".")
-)(
-  JSPlatform,
-  JVMPlatform,
-  NativePlatform
-).crossType(
-  CustomCrossType
-).settings(
-  commonSettings,
-  scalazVersion := "7.3.8",
-  testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
-  libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % "test",
-  libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
-).jsSettings(
-  scalacOptions += {
-    val a = (LocalRootProject / baseDirectory).value.toURI.toString
-    val g = "https://raw.githubusercontent.com/xuwei-k/applybuilder/" + tagOrHash.value
-    val key = CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((3, _)) =>
-        "-scalajs-mapSourceURI"
-      case _ =>
-        "-P:scalajs:mapSourceURI"
+val applybuilder = projectMatrix
+  .withId(projectName)
+  .in(file("."))
+  .defaultAxes()
+  .settings(
+    commonSettings,
+    scalazVersion := "7.3.8",
+    testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
+    libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % "test",
+    libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
+  )
+  .jvmPlatform(
+    scalaVersions,
+  )
+  .jsPlatform(
+    scalaVersions,
+    scalacOptions += {
+      val a = (LocalRootProject / baseDirectory).value.toURI.toString
+      val g = "https://raw.githubusercontent.com/xuwei-k/applybuilder/" + tagOrHash.value
+      val key = CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((3, _)) =>
+          "-scalajs-mapSourceURI"
+        case _ =>
+          "-P:scalajs:mapSourceURI"
+      }
+      s"${key}:$a->$g/"
     }
-    s"${key}:$a->$g/"
-  }
-)
-
-val applybuilderJVM = applybuilder.jvm
-val applybuilderJS = applybuilder.js.enablePlugins(ScalaJSJUnitPlugin)
-val applybuilderNative = applybuilder.native.enablePlugins(ScalaNativeJUnitPlugin)
+  )
+  .nativePlatform(
+    scalaVersions,
+  )
+  .configure(p =>
+    p.id.takeWhile(x => ('2' != x) && ('3' != x)) match {
+      case "applybuilderNative" =>
+        p.enablePlugins(ScalaNativeJUnitPlugin)
+      case "applybuilderJS" =>
+        p.enablePlugins(ScalaJSJUnitPlugin)
+      case "applybuilderJVM" =>
+        p
+    }
+  )
 
 val root = Project(
   "root",
   file(".")
 ).settings(
   commonSettings,
+  autoScalaLibrary := false,
   Compile / scalaSource := baseDirectory.value / "dummy",
   Test / scalaSource := baseDirectory.value / "dummy",
   PgpKeys.publishSigned := {},
@@ -194,7 +195,5 @@ val root = Project(
   Compile / publishArtifact := false,
   publish := {}
 ).aggregate(
-  applybuilderJVM,
-  applybuilderJS,
-  applybuilderNative
+  applybuilder.projectRefs *
 )
