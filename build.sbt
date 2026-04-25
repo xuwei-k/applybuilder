@@ -121,6 +121,7 @@ val commonSettings = Def.settings(
     CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, v)) if v <= 12 =>
         Seq(
+          "-language:higherKinds",
           "-Ypartial-unification"
         )
       case _ =>
@@ -132,7 +133,6 @@ val commonSettings = Def.settings(
     "-Xlint" ::
     "-unchecked" ::
     "-language:existentials" ::
-    "-language:higherKinds" ::
     "-language:implicitConversions" ::
     Nil
   ) ++ PartialFunction.condOpt(CrossVersion.partialVersion(scalaVersion.value)){
