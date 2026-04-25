@@ -76,7 +76,6 @@ val commonSettings = Def.settings(
     updateReadmeProcess,
     tagRelease,
     releaseStepAggregateCross(PgpKeys.publishSigned),
-    releaseStepCommandAndRemaining("+ applybuilderNative/publishSigned"),
     releaseStepCommandAndRemaining("sonaRelease"),
     setNextVersion,
     commitNextVersion,
@@ -187,5 +186,5 @@ val root = Project(
   Compile / publishArtifact := false,
   publish := {}
 ).aggregate(
-  applybuilderJVM, applybuilderJS
+  applybuilderJVM, applybuilderJS, applybuilderNative
 )
