@@ -64,7 +64,6 @@ val commonSettings = Def.settings(
   publishTo := (if (isSnapshot.value) None else localStaging.value),
   name := projectName,
   sourcesInBase := false,
-  fullResolvers ~= {_.filterNot(_.name == "jcenter")},
   commands += Command.command("updateReadme")(updateReadme),
   releaseTagName := tagName.value,
   releaseProcess := Seq[ReleaseStep](
