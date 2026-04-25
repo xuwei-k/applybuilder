@@ -10,7 +10,7 @@ def Scala212 = "2.12.21"
 
 val scalaVersions = Seq(Scala212, "2.13.18", "3.3.8")
 
-def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
+def gitHash(): String = Process("git rev-parse HEAD").lazyLines_!.head
 
 val tagName = Def.setting {
   s"v${if (releaseUseGlobalVersion.value) (ThisBuild / version).value else version.value}"
@@ -147,7 +147,7 @@ val applybuilder = projectMatrix
     scalazVersion := "7.3.9",
     testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
     libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % "test",
-    libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
+    libraryDependencies += "org.scalaz" %% "scalaz-core" % scalazVersion.value
   )
   .jvmPlatform(
     scalaVersions,
@@ -192,10 +192,7 @@ val applybuilder = projectMatrix
     }
   )
 
-val root = Project(
-  "root",
-  file(".")
-).settings(
+val applybuilderRoot = rootProject.autoAggregate.settings(
   commonSettings,
   autoScalaLibrary := false,
   Compile / scalaSource := baseDirectory.value / "dummy",
@@ -205,6 +202,4 @@ val root = Project(
   publishLocal := {},
   Compile / publishArtifact := false,
   publish := {}
-).aggregate(
-  applybuilder.projectRefs *
 )
