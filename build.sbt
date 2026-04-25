@@ -66,7 +66,7 @@ val unusedWarnings = (
 )
 
 val commonSettings = Def.settings(
-  publishTo := sonatypePublishToBundle.value,
+  publishTo := (if (isSnapshot.value) None else localStaging.value),
   name := projectName,
   sourcesInBase := false,
   fullResolvers ~= {_.filterNot(_.name == "jcenter")},
@@ -89,7 +89,7 @@ val commonSettings = Def.settings(
     tagRelease,
     releaseStepAggregateCross(PgpKeys.publishSigned),
     releaseStepCommandAndRemaining("+ applybuilderNative/publishSigned"),
-    releaseStepCommandAndRemaining("sonatypeBundleRelease"),
+    releaseStepCommandAndRemaining("sonaRelease"),
     setNextVersion,
     commitNextVersion,
     updateReadmeProcess,
