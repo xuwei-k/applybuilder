@@ -10,7 +10,7 @@ def Scala212 = "2.12.21"
 
 val scalaVersions = Seq(Scala212, "2.13.18", "3.3.7")
 
-def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
+def gitHash(): String = Process("git rev-parse HEAD").lazyLines_!.head
 
 val tagName = Def.setting {
   s"v${if (releaseUseGlobalVersion.value) (ThisBuild / version).value else version.value}"
@@ -147,13 +147,13 @@ val applybuilder = projectMatrix
     scalazVersion := "7.3.8",
     testOptions += Tests.Argument(TestFrameworks.JUnit, "-v"),
     libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % "test",
-    libraryDependencies += "org.scalaz" %%% "scalaz-core" % scalazVersion.value
+    libraryDependencies += "org.scalaz" %% "scalaz-core" % scalazVersion.value
   )
   .jvmPlatform(
     scalaVersions,
   )
   .jsPlatform(
-    scalaVersions,
+    Nil,
     scalacOptions += {
       val a = (LocalRootProject / baseDirectory).value.toURI.toString
       val g = "https://raw.githubusercontent.com/xuwei-k/applybuilder/" + tagOrHash.value
@@ -173,8 +173,6 @@ val applybuilder = projectMatrix
     p.id.takeWhile(x => ('2' != x) && ('3' != x)) match {
       case "applybuilderNative" =>
         p.enablePlugins(ScalaNativeJUnitPlugin)
-      case "applybuilderJS" =>
-        p.enablePlugins(ScalaJSJUnitPlugin)
       case "applybuilderJVM" =>
         p
     }
