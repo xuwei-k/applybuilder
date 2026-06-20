@@ -8,7 +8,7 @@ val isScala3 = Def.setting(
 
 def Scala212 = "2.12.21"
 
-val scalaVersions = Seq(Scala212, "2.13.18", "3.3.8")
+val scalaVersions = Seq(Scala212, "2.13.18", "3.8.4")
 
 def gitHash(): String = Process("git rev-parse HEAD").lineStream_!.head
 
